@@ -1,5 +1,6 @@
 <?php
 
+use App\Models\Listings;
 use Illuminate\Http\Response;
 use Illuminate\Support\Facades\Route;
 
@@ -18,16 +19,31 @@ Route::get('/', function () {
     return view('welcome');
 });
 
-Route::get('/test', function () {
-    return response('<h1>Hello World</h1>')
-    -> header('Content-Type', 'text/html');
-}); 
+// Route::get('/test', function () {
+//     return response('<h1>Hello World</h1>')
+//     -> header('Content-Type', 'text/html');
+// }); 
 
-Route::get('/posts/{id}', function ($id) {
-    return response('This is post number ' . $id);
-})->where('id', '[0-9]+');
+// Route::get('/posts/{id}', function ($id) {
+//     return response('This is post number ' . $id);
+// })->where('id', '[0-9]+');
 
-Route::get('/search', function (Response $response){
-    dd($response->name . ' ' . $response->city);
+// Route::get('/search', function (Response $response){
+//     dd($response->name . ' ' . $response->city);
 
+// });
+
+Route::get('/home', function () {
+    return view('listing', [
+        'heading' => 'This is a heading',
+        'listings' => Listings::all()
+    ]);
+});
+
+// Single Listing
+Route::get('/listings/{id}', function ($id) {
+    return view('listing', [
+        'heading' => 'This is a heading',
+        'listings' => Listings::find($id)
+    ]);
 });
